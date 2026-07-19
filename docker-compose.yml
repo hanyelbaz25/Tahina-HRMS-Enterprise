@@ -1,0 +1,53 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: tahina_hrms_db
+    environment:
+      POSTGRES_DB: tahina_hrms
+      POSTGRES_USER: tahina
+      POSTGRES_PASSWORD: tahina_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tahina -d tahina_hrms"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: tahina_hrms_backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://tahina:tahina_dev_password@db:5432/tahina_hrms
+      TOKEN_SECRET: tahina-development-secret-change-before-production
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: Admin@123
+      HR_USERNAME: hr
+      HR_PASSWORD: HR@12345
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - document_uploads:/app/uploads
+
+  frontend:
+    build: ./frontend
+    container_name: tahina_hrms_frontend
+    environment:
+      VITE_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
+  document_uploads:
