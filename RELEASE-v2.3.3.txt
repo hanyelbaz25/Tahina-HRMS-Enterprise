@@ -1,0 +1,8 @@
+Tahina HRMS Enterprise v2.3.3
+
+- Professional payroll entry form.
+- Clear labels above every field.
+- Visual sections for employee/month, attendance/overtime, and absence/deductions.
+- Responsive desktop and mobile layout.
+- Improved save button and focus states.
+- Frontend production build verified successfully.

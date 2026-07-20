@@ -1,0 +1,15 @@
+Tahina HRMS Enterprise v2.3.6 - Verified Build
+
+Changes:
+- Added explicit npm registry and robust timeout/retry settings.
+- Added visible npm installation logging during Docker build.
+- Added BuildKit npm cache mount to reduce repeated downloads.
+- Added a production frontend build check inside the Docker image build.
+- Retained all v2.3.5 application features and UI changes.
+
+Validation completed:
+- npm ci completed successfully using Node.js 22.16.0 and npm 10.9.2.
+- TypeScript compilation completed successfully.
+- Vite production build completed successfully.
+- Backend Python source compiled successfully.
+- package-lock.json parsed and matched package.json.

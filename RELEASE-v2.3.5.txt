@@ -1,0 +1,7 @@
+Tahina HRMS Enterprise v2.3.5
+
+- Fixed frontend Docker build reliability.
+- Pinned Node.js to 22.16.0 Debian slim instead of Alpine.
+- Replaced npm install with deterministic npm ci.
+- Added npm network retries and disabled audit/fund/update checks during Docker builds.
+- Includes all v2.3.4 payroll layout and menu-order improvements.

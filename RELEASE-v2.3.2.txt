@@ -1,0 +1,7 @@
+Tahina HRMS Enterprise v2.3.2
+
+- Professional redesign for the Daily Financial Movements form.
+- Added visible labels above every input and select field.
+- Grouped fields into Employee Data, Financial Movement Details, and Application & Collection.
+- Improved responsive layout, spacing, input states, and submit action.
+- Frontend TypeScript/Vite production build verified successfully.

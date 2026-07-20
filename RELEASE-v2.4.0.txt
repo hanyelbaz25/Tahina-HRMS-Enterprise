@@ -1,0 +1,12 @@
+Tahina HRMS Enterprise v2.4.0 - Enterprise UI
+
+Implemented:
+- Professional redesign of Contracts & Residency page.
+- Professional redesign of Leave & Balances page.
+- Unified enterprise cards, form sections, fields, action areas and responsive layouts.
+- Added summary indicators for documents and leave requests.
+- Added employee summary and leave balance context inside forms.
+- Added improved attachment upload area.
+- Preserved all existing APIs and database structure.
+- Replaced internal npm package URLs with the public npm registry.
+- Frontend production build verified successfully.

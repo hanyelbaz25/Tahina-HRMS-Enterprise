@@ -1,0 +1,6 @@
+Tahina HRMS Enterprise v2.3.4
+
+- Enhanced payroll entry form with clearly separated section headers.
+- Added visible labels above every payroll field.
+- Improved field cards, spacing, focus states, and mobile responsiveness.
+- Moved Reports above Users & Permissions in the main navigation.

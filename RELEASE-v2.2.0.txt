@@ -1,0 +1,14 @@
+Tahina HRMS Enterprise v2.2.0 - Reports Center
+
+Implemented:
+- Professional reports center with category filters and search.
+- Live record counters from the existing backend APIs.
+- Reports for employees, attendance, leaves, loans, financial orders,
+  penalties, rewards, payroll, contracts and documents.
+- Direct navigation from each report to its source page.
+- Excel-compatible CSV export with Arabic UTF-8 support.
+- Print-friendly reports center layout.
+- Responsive desktop and mobile styling.
+
+Validation:
+- Frontend production build completed successfully with TypeScript and Vite.

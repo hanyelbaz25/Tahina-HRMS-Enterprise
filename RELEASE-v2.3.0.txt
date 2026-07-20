@@ -1,0 +1,8 @@
+Tahina HRMS Enterprise v2.3.0 - Professional Reports
+
+- Professional report preview modal.
+- Real XLSX export using ExcelJS.
+- Formatted Excel title, metadata, headers, filters, widths and page settings.
+- Arabic PDF export rendered from the report preview.
+- Printable report with logo, header, footer and HR signature area.
+- Updated professional report cards and export actions.

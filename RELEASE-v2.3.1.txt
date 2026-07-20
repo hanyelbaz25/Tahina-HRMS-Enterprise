@@ -1,0 +1,5 @@
+Tahina HRMS Enterprise v2.3.1
+- Added smart employee autocomplete search in Reports Center.
+- Search starts from the first letters of employee name or employee code.
+- Dropdown displays employee name and code.
+- Selecting an employee filters report counts, preview, PDF and Excel exports.
