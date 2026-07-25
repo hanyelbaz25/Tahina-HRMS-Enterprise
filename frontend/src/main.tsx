@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { App } from "./App";
+import { AppV3 } from "./AppV3";
 import "./styles.css";
+import "./v3.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode><App /></React.StrictMode>
+  <React.StrictMode><AppV3 /></React.StrictMode>
 );
