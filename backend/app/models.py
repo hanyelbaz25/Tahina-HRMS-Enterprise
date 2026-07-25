@@ -4,6 +4,7 @@ from sqlalchemy import Boolean, Date, DateTime, ForeignKey, Integer, Numeric, St
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database import Base
 
+
 class Company(Base):
     __tablename__ = "companies"
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -51,6 +52,12 @@ class Employee(Base):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     branch: Mapped[Branch] = relationship(back_populates="employees")
+    branch_transfers: Mapped[list["EmployeeBranchTransfer"]] = relationship(
+        back_populates="employee",
+        foreign_keys="EmployeeBranchTransfer.employee_id",
+        cascade="all, delete-orphan",
+        order_by="EmployeeBranchTransfer.effective_date",
+    )
 
 
 class Attendance(Base):
@@ -59,6 +66,7 @@ class Attendance(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     employee_id: Mapped[int] = mapped_column(ForeignKey("employees.id"), index=True)
+    branch_id: Mapped[int] = mapped_column(ForeignKey("branches.id"), index=True)
     work_date: Mapped[date] = mapped_column(Date, index=True)
     check_in: Mapped[time | None] = mapped_column(Time, nullable=True)
     check_out: Mapped[time | None] = mapped_column(Time, nullable=True)
@@ -66,6 +74,31 @@ class Attendance(Base):
     source: Mapped[str] = mapped_column(String(20), default="manual")
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     employee: Mapped[Employee] = relationship()
+    branch: Mapped[Branch] = relationship()
+
+
+class EmployeeBranchTransfer(Base):
+    __tablename__ = "employee_branch_transfers"
+    __table_args__ = (
+        UniqueConstraint("employee_id", "effective_date", name="uq_employee_branch_transfer_date"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    employee_id: Mapped[int] = mapped_column(ForeignKey("employees.id", ondelete="CASCADE"), index=True)
+    from_branch_id: Mapped[int] = mapped_column(ForeignKey("branches.id"), index=True)
+    to_branch_id: Mapped[int] = mapped_column(ForeignKey("branches.id"), index=True)
+    effective_date: Mapped[date] = mapped_column(Date, index=True)
+    reason: Mapped[str] = mapped_column(String(300), default="")
+    notes: Mapped[str] = mapped_column(String(500), default="")
+    created_by: Mapped[str] = mapped_column(String(60), default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), index=True)
+
+    employee: Mapped[Employee] = relationship(
+        back_populates="branch_transfers",
+        foreign_keys=[employee_id],
+    )
+    from_branch: Mapped[Branch] = relationship(foreign_keys=[from_branch_id])
+    to_branch: Mapped[Branch] = relationship(foreign_keys=[to_branch_id])
 
 
 class Payroll(Base):
