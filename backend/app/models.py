@@ -51,6 +51,37 @@ class Employee(Base):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     branch: Mapped[Branch] = relationship(back_populates="employees")
+    branch_assignments: Mapped[list["EmployeeBranchAssignment"]] = relationship(
+        back_populates="employee",
+        cascade="all, delete-orphan",
+        order_by="EmployeeBranchAssignment.start_date",
+    )
+
+
+class EmployeeBranchAssignment(Base):
+    __tablename__ = "employee_branch_assignments"
+    __table_args__ = (
+        UniqueConstraint(
+            "employee_id", "branch_id", "start_date",
+            name="uq_employee_branch_assignment_start",
+        ),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    employee_id: Mapped[int] = mapped_column(ForeignKey("employees.id", ondelete="CASCADE"), index=True)
+    branch_id: Mapped[int] = mapped_column(ForeignKey("branches.id"), index=True)
+    assignment_type: Mapped[str] = mapped_column(String(20), default="temporary", index=True)
+    start_date: Mapped[date] = mapped_column(Date, index=True)
+    end_date: Mapped[date | None] = mapped_column(Date, nullable=True, index=True)
+    planned_work_days: Mapped[Decimal | None] = mapped_column(Numeric(6, 2), nullable=True)
+    reason: Mapped[str] = mapped_column(String(300), default="")
+    status: Mapped[str] = mapped_column(String(20), default="active", index=True)
+    approved_by: Mapped[str] = mapped_column(String(60), default="")
+    created_by: Mapped[str] = mapped_column(String(60), default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), onupdate=func.now())
+    employee: Mapped[Employee] = relationship(back_populates="branch_assignments")
+    branch: Mapped[Branch] = relationship()
 
 
 class Attendance(Base):
